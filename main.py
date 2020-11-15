@@ -18,7 +18,7 @@ class Empleado():
     def Imprimir(self):
         print("|Nombre: ", self.nombre, "| Apellidos: ", self.apellidos, "| DNI: ", self.DNI, "| Salario: ",self.salario, "| Supervisor: ", self.supervisor, "| Antiguedad: ",self.antiguedad,"|")
 class Jefe(Empleado):
-    def __init__(self, nombre, apellidos, DNI, direccion, salario,CocheEmpresa,secretario,incremento=20):
+    def __init__(self, nombre, apellidos, DNI, direccion, salario,CocheEmpresa,Secretario,incremento=20):
         self.nombre = nombre
         self.apellidos = apellidos
         self.DNI = DNI
@@ -26,29 +26,32 @@ class Jefe(Empleado):
         self.salario = salario
         self.incremento = incremento
         self.CocheEmpresa = CocheEmpresa
-        self.secretario = secretario
+        self.Secretario = Secretario
     def Imprimir(self):
         print("|Nombre: ", self.nombre, "| Apellidos: ", self.apellidos, "| DNI: ", self.DNI, "| Salario: ",self.salario,"| Cargo: JEFE DE ZONA")
         self.CocheEmpresa.Imprimir()
+        self.Secretario.Imprimir()
     def CambiarCoche(self):
         matricula = input("Matricla del coche: ")
         marca = input("Marca del vehiculo: ")
         modelo = input("Modelo: ")
 
-        self.cocheDeEmpresa = CocheEmpresa(matricula, marca, modelo)
+        self.CocheEmpresa = CocheEmpresa(matricula, marca, modelo)
     def CambiaSecretario(self):
-        DNIEmpleado = input("DNI del Empleado >>")
+        DNIEmpleado = int(input("DNI del Empleado >>"))
         for i in lista_empleados:
-           if i.DNI == DNIEmpleado:
-               self.secretario = i
+           if DNIEmpleado == i.DNI :
+            print("Encontrado")
+            self.Secretario = i
+
     def AltaVendedor(self):
-        DNIVendedor = input("Ingrese DNI")
+        DNIVendedor = int(input("Ingrese DNI"))
 
         for i in lista_empleados:
             if i.DNI == DNIVendedor:
                 lista_vendedores.append(i)
     def BajaVendedor(self):
-        DNIVendedor = input("Ingrese DNI")
+        DNIVendedor = int(input("Ingrese DNI"))
 
         for i in lista_empleados:
             if i.DNI == DNIVendedor:
@@ -124,14 +127,18 @@ class Cliente():
 if __name__ == '__main__':
     NuevoSupervisor = Supervisor("Empleado 1","Lopez",4654654,"Calle San Marcos nº15",1500,"nulo",1)
     lista_empleados.append(NuevoSupervisor)
-    NuevoEmpleado = Empleado("Empleado 2","Garcia",64564654,"Avenida los carmenes mº45",1200,NuevoSupervisor.nombre,2)
+    NuevoEmpleado = Empleado("Empleado 2","Garcia",78678678,"Avenida los carmenes mº45",1200,NuevoSupervisor.nombre,2)
     lista_empleados.append(NuevoEmpleado)
-    NuevoSecretario = Secretario("Empleado 3","Muñoz",65465454,"Calle la Tula",1400,NuevoSupervisor.nombre,3)
+    NuevoSecretario = Secretario("Empleado 3","Muñoz",978789789,"Calle la Tula",1400,NuevoSupervisor.nombre,3)
     lista_empleados.append(NuevoSecretario)
+
     NuevoEmpleado2 = Empleado("Empleado 4", "Garcia", 64564654, "Avenida los carmenes mº45", 1200,NuevoSupervisor.nombre, 2)
     lista_empleados.append(NuevoEmpleado2)
+
+    NuevoSecretario2 = Secretario("Empleado 5","Juarez",7896789,"Avenida de la Constitucion nº4",1400,NuevoSupervisor.nombre,3)
+    lista_empleados.append(NuevoSecretario2)
     cochejefe = CocheEmpresa("7895Asd","Seat Cupra","x")
-    Jefe  = Jefe("Jefe","Navarro",65464556,"Avenida los Patos nº20",2000,cochejefe,NuevoSecretario,1)
+    Jefe  = Jefe("Jefe","Navarro",8978978,"Avenida los Patos nº20",2000,cochejefe,NuevoSecretario,1)
     lista_empleados.append(Jefe)
 
     Cliente1 = Cliente("Juan","1")
@@ -164,4 +171,13 @@ if __name__ == '__main__':
     Jefe.AltaVendedor()
 
     for Vendedor in lista_vendedores:
-                i.Imprimir()
+                Vendedor.Imprimir()
+    print("Baja Vendedor")
+
+    Jefe.BajaVendedor()
+    for Vendedor in lista_vendedores:
+                Vendedor.Imprimir()
+    Jefe.CambiarCoche()
+    Jefe.Imprimir()
+    Jefe.CambiaSecretario()
+    Jefe.Imprimir()
