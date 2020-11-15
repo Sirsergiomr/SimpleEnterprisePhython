@@ -1,31 +1,66 @@
 lista_empleados = []
 lista_clientes = []
+lista_vendedores = []
 class Empleado():
-    def __init__(self, nombre, apellidos,DNI,direccion,salario,supervisor):
+    def __init__(self, nombre, apellidos,DNI,direccion,salario,supervisor,antiguedad):
         self.nombre = nombre
         self.apellidos = apellidos
         self.DNI = DNI
         self.direccion = direccion
         self.salario = salario
         self.supervisor = supervisor
-
-    def Imprimir(self):
-            print("|Nombre: ", self.nombre, "| Apellidos: ", self.apellidos, "| DNI: ", self.DNI, "| Salario: ",self.salario,"| Supervisor: ",self.supervisor,"|")
-
+        self.antiguedad = antiguedad
+    def Incremento(self):
+        Sueldo_Final = (self.salario * (self.incremento*self.antiguedad))/100
+        print("| Suedo Final = ",Sueldo_Final)
     def Supervisor(self):
         nuevoSupervisor = input("Nombre del supervisor")
+class Jefe(Empleado):
+    def __init__(self, nombre, apellidos, DNI, direccion, salario,cocheDeEmpresa,secretario,incremento=20):
+        self.nombre = nombre
+        self.apellidos = apellidos
+        self.DNI = DNI
+        self.direccion = direccion
+        self.salario = salario
+        self.incremento = incremento
+        self.cocheDeEmpresa = cocheDeEmpresa
+        self.secretario = secretario
+    def Imprimir(self):
+        print("|Nombre: ", self.nombre, "| Apellidos: ", self.apellidos, "| DNI: ", self.DNI, "| Salario: ",self.salario,"| Cargo: JEFE DE ZONA")
+    def CambiarCoche(self):
+        matricula = input("Matricla del coche: ")
+        marca = input("Marca del vehiculo: ")
+        modelo = input("Modelo: ")
 
+        self.cocheDeEmpresa = CocheEmpresa(matricula, marca, modelo)
+    def CambiaSecretario(self):
+        DNIEmpleado = input("DNI del Empleado >>")
+        for i in lista_empleados:
+           if i.DNI == DNIEmpleado:
+               self.secretario = i
+    def AltaVendedor(self):
+        DNIVendedor = input("Ingrese DNI")
+
+        for i in lista_empleados:
+            if i.DNI == DNIVendedor:
+                lista_vendedores.append(i)
+    def BajaVendedor(self):
+        DNIVendedor = input("Ingrese DNI")
+
+        for i in lista_empleados:
+            if i.DNI == DNIVendedor:
+                lista_vendedores.remove(i)
 class Supervisor(Empleado):
                 print()
 class Secretario(Empleado):
-    def __init__(self, nombre, apellidos,DNI,direccion,salario,supervisor,salarioAnual):
+    def __init__(self, nombre, apellidos,DNI,direccion,salario,supervisor,incremento=5):
         self.nombre = nombre
         self.apellidos = apellidos
         self.DNI = DNI
         self.direccion = direccion
         self.salario = salario
         self.supervisor = supervisor
-        self.salarioAnual = salarioAnual
+        self.incremento= incremento
     def Imprimir(self):
         print("|Nombre: ", self.nombre, "| Apellidos: ", self.apellidos, "| DNI: ", self.DNI, "| Salario: ",self.salario, "| Supervisor: ", self.supervisor, "| SalarioAnual: ",self.salarioAnual,"|")
 class CocheEmpresa():
@@ -36,13 +71,19 @@ class CocheEmpresa():
     def Imprimir(self):
         print("|Matricula: ",self.matricula,"| Marca: ",self.marca,"| Modelo: ",self.modelo)
 class Vendedor(Empleado):
-    def __init__(self,cocheDeEmpresa,telefono,areaVenta,listadeclientes,comision,incremento):
+    def __init__(self,cocheDeEmpresa,telefono,areaVenta,listadeclientes,comision,incremento=10):
         self.telefono = telefono
         self.areaVenta = areaVenta
         self.listaclientes = listadeclientes
         self.comision = comision
         self.incremento = incremento
         self.cocheDeEmpresa = cocheDeEmpresa
+    def Incremento(self):
+        Sueldo = (self.salario * (self.incremento*self.antiguedad))/100
+        Sueldo_Final = Sueldo
+        if self.comision > 0:
+            Sueldo_Final = (Sueldo * self.comision)/100
+        print("| Suedo Final = ",Sueldo_Final)
     def Imprimir(self):
         print("|Telefono: ",self.telefono,"| Area de Venta", self.areaVenta,self.listaclientes,self.comision,self.incremento)
 
